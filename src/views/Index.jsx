@@ -1,35 +1,38 @@
-import Header from "components/Headers/Header.jsx";
 import React from "react";
-import { Container } from "reactstrap";
+import { Card, CardBody, CardTitle, Container, Row, Col, CardImg, CardImgOverlay, CardText } from "reactstrap";
 
 
 
 class Index extends React.Component {
-  state = {
-    activeNav: 1,
-    chartExample1Data: "data1"
-  };
-  toggleNavs = (e, index) => {
-    e.preventDefault();
-    this.setState({
-      activeNav: index,
-      chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
-    });
-    let wow = () => {
-      console.log(this.state);
-    };
-    wow.bind(this);
-    setTimeout(() => wow(), 1000);
-    // this.chartReference.update();
-  };
-  
   render() {
     return (
       <>
-        <Header />
-        {/* Page content */}
-        <Container className="mt--7" fluid>
+        <Container fluid style={{ alignSelf: 'center' }}>
+          <Row >
+            <Col className="ml-5 mr-5" justifyContent="center" style={{ cursor: 'pointer' }}>
+              <Card className="card-stats mb-4 mb-xl-0 text-center">
+                <CardBody>
+                  <div className="icon-lg icon-shape bg-red text-white rounded-circle shadow">
+                    <i className="fa fa-users fa-10x" />
+                  </div>
+                </CardBody>
+
+                <CardTitle tag="h5" className="text-uppercase text-muted mb-2">Clients</CardTitle>
+              </Card>
+            </Col>
+            <Col  className="ml-5 mr-5" justifyContent="center" style={{ cursor: 'pointer' }}>
+              <Card className="card-stats mb-4 mb-xl-0 text-center">
+                <CardBody>
+                  <div className="icon-lg icon-shape bg-info text-white rounded-circle shadow">
+                    <i className="ni ni-collection mr-1" />
+                  </div>
+                </CardBody>
+
+                <CardTitle tag="h5" className="text-uppercase text-muted mb-2" >Orders</CardTitle>
+              </Card>
+            </Col>
+
+          </Row>
         </Container>
       </>
     );

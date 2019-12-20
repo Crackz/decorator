@@ -1,8 +1,17 @@
 import * as ActionTypes from '../reducers/actionTypes';
 import axios from 'axios';
 
+function cleanUpAuth() {
+	localStorage.removeItem('token');
+	localStorage.removeItem('user');
+}
+
 function setTokenToStorage(token) {
 	localStorage.setItem('token', token);
+}
+
+function setUserToStorage(userData) {
+	localStorage.setItem('user', JSON.stringify(userData));
 }
 
 export function register(registerData, history) {
@@ -17,8 +26,9 @@ export function register(registerData, history) {
 				headers: { 'Content-Type': 'multipart/form-data' }
 			});
 
-			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: res.data.user });
+			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: { user: res.data.user } });
 			setTokenToStorage(res.data.accessToken);
+			setUserToStorage(res.data.user);
 			history.push('/dashboard');
 		} catch (error) {
 			let apiErrors = [];
@@ -48,8 +58,9 @@ export function login(loginData, history) {
 				data: loginData
 			});
 
-			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: res.data.user });
+			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: { user: res.data.user } });
 			setTokenToStorage(res.data.accessToken);
+			setUserToStorage(res.data.user);
 			history.push('/dashboard');
 		} catch (error) {
 			let apiErrors = [];
@@ -68,17 +79,16 @@ export function login(loginData, history) {
 	};
 }
 
-export function clearErrors() {
-	return async (dispatch) => {
+export const signout = (history) => {
+	cleanUpAuth();
+	history.push('/auth/login');
+	return (dispatch) => {
+		dispatch({ type: ActionTypes.AUTH_SIGN_OUT });
+	};
+};
+
+export const clearErrors = () => {
+	return (dispatch) => {
 		dispatch({ type: ActionTypes.AUTH_CLEAR_ERRORS });
 	};
-}
-
-// export const signout = () => {
-//   localStorage.removeItem('token');
-
-//   return {
-//     type: AUTH_USER,
-//     payload: ''
-//   };
-// };
+};

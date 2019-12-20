@@ -13,7 +13,10 @@ let composeEnhancers = compose;
 export const store = createStore(
 	rootReducer,
 	{
-		auth: { isAuthenticated: localStorage.getItem('token') ? true : false }
+		auth: {
+			isAuthenticated: localStorage.getItem('token') ? true : false,
+			currentUser: JSON.parse(localStorage.getItem('user') || "null")
+		}
 	},
 	composeEnhancers(applyMiddleware(...middlewares))
 );

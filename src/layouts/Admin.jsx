@@ -1,11 +1,9 @@
+import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
+import Sidebar from "components/Sidebar/Sidebar.jsx";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { Container } from "reactstrap";
-import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
-import AdminFooter from "components/Footers/AdminFooter.jsx";
-import Sidebar from "components/Sidebar/Sidebar.jsx";
-
 import routes from "routes.js";
+
 
 class Admin extends React.Component {
   componentDidUpdate(e) {
@@ -52,16 +50,15 @@ class Admin extends React.Component {
             imgAlt: "..."
           }}
         />
-        
-        <div className="main-content" ref="mainContent">
+
+        <div className="main-content bg-gradient-info" ref="mainContent" style={{ display: "flex" }}>
           <AdminNavbar
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
+          {/* <div className="pt-6">
+          </div> */}
           <Switch>{this.getRoutes(routes)}</Switch>
-          <Container fluid>
-            <AdminFooter />
-          </Container>
         </div>
       </>
     );

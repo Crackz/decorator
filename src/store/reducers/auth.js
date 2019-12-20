@@ -28,10 +28,19 @@ export const authReducer = (state = initialState, action) => {
 				isAuthenticating: false,
 				apiErrors: action.payload
 			};
+		case ActionTypes.AUTH_SIGN_OUT:
+			return { 
+				...state,
+				isAuthenticated: false,
+				isAuthenticating: false,
+				apiErrors: null,
+				user: null,
+
+			}
 		case ActionTypes.AUTH_CLEAR_ERRORS:
 			return {
 				...state,
-				apiErrors: null
+				...initialState
 			};
 		default:
 			return state;
