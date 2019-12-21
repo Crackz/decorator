@@ -3,16 +3,23 @@ import Profile from "views/examples/Profile.jsx";
 import Maps from "views/examples/Maps.jsx";
 import Register from "views/Register.jsx";
 import Login from "views/Login.jsx";
-import Tables from "views/examples/Tables.jsx";
+import Client from "views/Client.jsx";
 import Icons from "views/examples/Icons.jsx";
 import RequireAuth from "./components/Shared/RequireAuth";
 
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
+    name: "Home",
     icon: "ni ni-tv-2 text-primary",
     component: RequireAuth(Index),
+    layout: "/dashboard"
+  },
+  {
+    path: "/clients",
+    name: "Clients",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: RequireAuth(Client),
     layout: "/dashboard"
   },
   {
@@ -36,13 +43,7 @@ var routes = [
     component: RequireAuth(Profile),
     layout: "/dashboard"
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: RequireAuth(Tables),
-    layout: "/dashboard"
-  },
+  
   {
     path: "/login",
     name: "Login",

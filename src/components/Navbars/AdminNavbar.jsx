@@ -42,7 +42,7 @@ const AdminNavbar = (props) => {
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </DropdownItem>
                 <DropdownItem style={{cursor: 'pointer'}} onClick={() => props.signout(props.history)}>
-                  <i className="ni ni-user-run" />
+                  <i className="fa fa-suitcase" aria-hidden="true" />
                   <span>Logout</span>
                 </DropdownItem>
               </DropdownMenu>

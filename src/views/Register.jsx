@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import useForm from "react-hook-form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Card, CardBody, Col, Form, FormFeedback, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row, UncontrolledAlert } from "reactstrap";
+import { Button, Card, CardBody, Col, Form, FormFeedback, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from "reactstrap";
+import AppAlert from '../components/Shared/AppAlert';
 import { LoadingSpinner } from '../components/Shared/LoadingSpinner';
 import * as actions from '../store/actions';
-import AppAlert from '../components/Shared/AppAlert';
 
 const Register = (props) => {
   const { handleSubmit, register, errors } = useForm();

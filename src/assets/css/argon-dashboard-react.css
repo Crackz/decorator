@@ -10435,7 +10435,10 @@ a.btn-icon-only {
       background-color: transparent; }
 
 .main-content {
-  position: relative; }
+  position: relative;
+  display: flex !important;
+}
+
   .main-content .navbar-top {
     position: absolute;
     left: 0;

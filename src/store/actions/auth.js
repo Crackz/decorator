@@ -29,7 +29,7 @@ export function register(registerData, history) {
 			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: { user: res.data.user } });
 			setTokenToStorage(res.data.accessToken);
 			setUserToStorage(res.data.user);
-			history.push('/dashboard');
+			history.push('/dashboard/index');
 		} catch (error) {
 			let apiErrors = [];
 
@@ -61,7 +61,7 @@ export function login(loginData, history) {
 			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: { user: res.data.user } });
 			setTokenToStorage(res.data.accessToken);
 			setUserToStorage(res.data.user);
-			history.push('/dashboard');
+			history.push('/dashboard/index');
 		} catch (error) {
 			let apiErrors = [];
 

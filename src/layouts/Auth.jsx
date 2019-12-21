@@ -32,7 +32,7 @@ const Auth = () => {
 
   return (
     <>
-      <div className="main-content">
+      <div className="main-auth-content">
         <AuthNavbar />
         <div className="header bg-gradient-info py-7 py-lg-8">
           <Container>

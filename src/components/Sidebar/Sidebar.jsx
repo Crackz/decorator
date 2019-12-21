@@ -2,6 +2,8 @@ import { PropTypes } from "prop-types";
 import React from "react";
 import { Link, NavLink as NavLinkRRD } from "react-router-dom";
 import { Col, Collapse, Container, DropdownItem, DropdownMenu, DropdownToggle, Media, Nav, Navbar, NavbarBrand, NavItem, NavLink, Row, UncontrolledDropdown } from "reactstrap";
+import { connect } from "react-redux";
+import * as actions from '../../store/actions';
 
 
 class Sidebar extends React.Component {
@@ -10,7 +12,7 @@ class Sidebar extends React.Component {
   };
   constructor(props) {
     super(props);
-    this.activeRoute.bind(this);
+    this.activeRoute = this.activeRoute.bind(this);
   }
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
@@ -28,10 +30,10 @@ class Sidebar extends React.Component {
       collapseOpen: false
     });
   };
+
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
     return routes.map((prop, key) => {
-console.log('SSS: ',prop.layout + prop.path);
       return (
         <NavItem key={key}>
           <NavLink
@@ -39,16 +41,21 @@ console.log('SSS: ',prop.layout + prop.path);
             tag={NavLinkRRD}
             onClick={this.closeCollapse}
             activeClassName="active"
+            style={{ textAlign: 'center' }}
           >
-            <i className={prop.icon} />
-            {prop.name}
+              <i className={prop.icon} />
+              <span className="p-2">
+                {prop.name}
+              </span>
           </NavLink>
         </NavItem>
       );
     });
   };
+
+
   render() {
-    const { bgColor, routes, logo } = this.props;
+    const { routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
       navbarBrandProps = {
@@ -86,46 +93,34 @@ console.log('SSS: ',prop.layout + prop.path);
               />
             </NavbarBrand>
           ) : null}
-          {/* User */}
+
+
+          {/* When it's Collaped */}
           <Nav className="align-items-center d-md-none">
-            <UncontrolledDropdown nav>
-              <DropdownToggle nav className="nav-link-icon">
-                <i className="ni ni-bell-55" />
-              </DropdownToggle>
-              <DropdownMenu
-                aria-labelledby="navbar-default_dropdown_1"
-                className="dropdown-menu-arrow"
-                right
-              >
-                <DropdownItem>Action</DropdownItem>
-                <DropdownItem>Another action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Something else here</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
             <UncontrolledDropdown nav>
               <DropdownToggle nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("assets/img/theme/team-1-800x800.jpg")}
+                      src={this.props.currentUser.profileImg}
                     />
                   </span>
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem className="noti-title" header tag="div">
-                  <h6 className="text-overflow m-0">Welcome Back!</h6>
+                  <h6 className="text-overflow m-0">Welcome!</h6>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                <DropdownItem onClick={() => this.props.signout(this.props.history)}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
+
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>
             {/* Collapse header */}
@@ -156,7 +151,9 @@ console.log('SSS: ',prop.layout + prop.path);
                 </Col>
               </Row>
             </div>
-            <Nav navbar>{this.createLinks(routes)}</Nav>
+
+
+            <Nav navbar style={{ alignItems: 'center' }}>{this.createLinks(routes)}</Nav>
           </Collapse>
         </Container>
       </Navbar>
@@ -185,4 +182,16 @@ Sidebar.propTypes = {
   })
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signout: (history) => dispatch(actions.signout(history))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

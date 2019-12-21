@@ -43,11 +43,11 @@ class Admin extends React.Component {
       <>
         <Sidebar
           {...this.props}
-          routes={routes}
+          routes={routes.filter((route) => route.path.includes('/index') || route.path.includes('/clients'))}
           logo={{
             innerLink: "/dashboard/index",
             imgSrc: require("assets/img/brand/logo.png"),
-            imgAlt: "..."
+            imgAlt: "logo"
           }}
         />
 
@@ -56,8 +56,6 @@ class Admin extends React.Component {
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
-          {/* <div className="pt-6">
-          </div> */}
           <Switch>{this.getRoutes(routes)}</Switch>
         </div>
       </>

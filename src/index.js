@@ -13,7 +13,7 @@ ReactDOM.render(
 	<Provider store={store}>
 		<Router>
 			<Switch>
-				<Route path="/dashboard/index" render={(props) => <AdminLayout {...props} />} />
+				<Route path="/dashboard" render={(props) => <AdminLayout {...props} />} />
 				<Route path="/auth" render={(props) => <AuthLayout {...props} />} />
 				<Redirect from="/" to="/dashboard/index" />
 			</Switch>
