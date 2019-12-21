@@ -6,7 +6,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 
-class Tables extends React.Component {
+class Client extends React.Component {
   limit = 50;
   constructor(props) {
     super(props);
@@ -174,13 +174,11 @@ class Tables extends React.Component {
   render() {
     return (
       <>
-        {/* Page content */}
         <div className="ag-theme-balham" style={{ flex: 1 }}>
           <AgGridReact
             animateRows
             columnDefs={this.state.columnDefs}
             floatingFilter={true}
-            // debug={true}
             defaultColDef={this.state.defaultColDef}
             rowSelection={this.state.rowSelection}
             rowDeselection={true}
@@ -190,10 +188,6 @@ class Tables extends React.Component {
             getRowNodeId={this.state.getRowNodeId}
             onGridReady={this.onGridReady}
             cacheBlockSize={this.limit}
-            overlayLoadingTemplate={'<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>'}
-            overlayNoRowsTemplate={
-              "<span style=\"padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;\">This is a custom 'no rows' overlay</span>"
-            }
           >
           </AgGridReact>
         </div>
@@ -202,4 +196,4 @@ class Tables extends React.Component {
   }
 }
 
-export default Tables;
+export default Client;
