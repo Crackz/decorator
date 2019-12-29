@@ -70,54 +70,65 @@
 // React differences
 @import "react/react-differences";
 
+@font-face {
+  font-family: "helvetica";
+  src: url("../fonts/helvetica.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: helvetica;
+}
+
 .avatar-wrapper {
-	position: relative;
-	height: 150px;
-	width: 150px;
-	margin: 0 auto;
-	border-radius: 50%;
-	overflow: hidden;
-	box-shadow: 1px 1px 15px -5px black;
-	transition: all .3s ease;
-	&:hover {
-		transform: scale(1.05);
-		cursor: pointer;
-	}
-	&:hover .profile-pic {
-		opacity: .5;
-	}
-	.profile-pic {
-		height: 100%;
-		width: 100%;
-		transition: all .3s ease;
-	}
-	.upload-button {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		.fa-arrow-circle-up {
-			position: absolute;
-			font-size: 150px;
-			top: 0;
-			left: 0;
-			text-align: center;
-			opacity: 0;
-			transition: all .3s ease;
-			color: #34495e;
-		}
-		&:hover .fa-arrow-circle-up {
-			opacity: .9;
-		}
-	}
+  position: relative;
+  height: 150px;
+  width: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 1px 1px 15px -5px black;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+  &:hover .profile-pic {
+    opacity: 0.5;
+  }
+  .profile-pic {
+    height: 100%;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  .upload-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    .fa-arrow-circle-up {
+      position: absolute;
+      font-size: 150px;
+      top: 0;
+      left: 0;
+      text-align: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      color: #34495e;
+    }
+    &:hover .fa-arrow-circle-up {
+      opacity: 0.9;
+    }
+  }
 }
 
 .invalid-feedback {
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-	text-align: center;
-	font-size: large;
-	width: 100%;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: center;
+  font-size: large;
+  width: 100%;
 }
 
 // .switch-wrapper {
@@ -129,12 +140,73 @@
 //   }
 
 .grid-cell-centered {
-	text-align: center;
+  text-align: center;
 }
 
 #navbar-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .ag-header-cell-label-center {
-	text-align: center;
+  text-align: center;
+}
+
+.ag-row .ag-cell {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center;
+}
+
+.ag-header-cell-label {
+  justify-content: center;
+}
+
+.form-radio {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  background-color: #f1f1f1;
+  color: #666;
+  top: 10px;
+  height: 30px;
+  width: 30px;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-right: 7px;
+  outline: none;
+}
+.form-radio:checked::before {
+  position: absolute;
+  font: 13px/1 "Open Sans", sans-serif;
+  left: 11px;
+  top: 7px;
+  content: "\02143";
+  transform: rotate(40deg);
+}
+.form-radio:hover {
+  background-color: #f7f7f7;
+}
+.form-radio:checked {
+  background-color: #f1f1f1;
+}
+label {
+  font: 15px/1.7 "Open Sans", sans-serif;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: pointer;
+}
+
+.form-center-text {
+  text-align: center;
+}
+
+
+.ag-header-group-cell-with-group {
+  background-color: #00E7B1;
 }

@@ -1,10 +1,7 @@
-import Index from "views/Index.jsx";
-import Profile from "views/examples/Profile.jsx";
-import Maps from "views/examples/Maps.jsx";
-import Register from "views/Register.jsx";
-import Login from "views/Login.jsx";
 import Client from "views/Client.jsx";
-import Icons from "views/examples/Icons.jsx";
+import Index from "views/Index.jsx";
+import Login from "views/Login.jsx";
+import Register from "views/Register.jsx";
 import RequireAuth from "./components/Shared/RequireAuth";
 
 var routes = [
@@ -22,28 +19,6 @@ var routes = [
     component: RequireAuth(Client),
     layout: "/dashboard"
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: RequireAuth(Icons),
-    layout: "/dashboard"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: RequireAuth(Maps),
-    layout: "/dashboard"
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: RequireAuth(Profile),
-    layout: "/dashboard"
-  },
-  
   {
     path: "/login",
     name: "Login",

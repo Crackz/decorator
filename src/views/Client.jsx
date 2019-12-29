@@ -4,13 +4,17 @@ import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 import React from "react";
 import { Link } from 'react-router-dom';
-
+import { Button } from 'reactstrap';
+import { ClientModal } from './ClientModal';
+import RequireAuth from '../components/Shared/RequireAuth';
 
 class Client extends React.Component {
   limit = 50;
+  gridApi;
   constructor(props) {
     super(props);
     this.state = {
+      isOpenModel: false,
       columnDefs: [
         {
           headerName: "View",
@@ -22,7 +26,7 @@ class Client extends React.Component {
           cellRendererFramework: function (params) {
             if (params.value !== undefined) {
               return (
-                <Link to={`/dashboard/profile/${params.value}`}>
+                <Link to={`/dashboard/clients/profile/${params.value}`}>
                   <i className="fa fa-eye fa-lg" />
                 </Link>
               );
@@ -44,7 +48,6 @@ class Client extends React.Component {
           headerName: "Name",
           field: "name",
           minWidth: 100,
-
           filter: "agTextColumnFilter",
           floatingFilterComponentParams: { suppressFilterButton: true },
           filterParams: {
@@ -81,7 +84,7 @@ class Client extends React.Component {
       ],
       defaultColDef: {
         sortable: true,
-        resizable: true
+        resizable: true,
       },
       rowSelection: "multiple",
       rowModelType: "infinite",
@@ -96,7 +99,6 @@ class Client extends React.Component {
 
 
   async getPaginatedData(params) {
-    console.log('PARAMS: ', params);
     const res = await axios({
       mathod: 'get',
       url: `${process.env.REACT_APP_API_URL}/clients`,
@@ -106,7 +108,6 @@ class Client extends React.Component {
       params,
     });
     return res.data;
-
   }
 
   mapFilterModelToQueryString(filterModel) {
@@ -145,6 +146,7 @@ class Client extends React.Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     params.api.sizeColumnsToFit();
+    params.api.resetRowHeights();
 
     const paginatedDataRequester = this.getPaginatedData.bind(this);
 
@@ -171,9 +173,26 @@ class Client extends React.Component {
   };
 
 
+  setOpenModel = (isOpenModel) => {
+    this.setState({ isOpenModel })
+  }
+
+
+  addNewClient = (data) => {
+    this.gridApi.updateRowData({ add: [data], addIndex: 0 });
+  }
+
   render() {
     return (
       <>
+
+        <ClientModal isOpenModel={this.state.isOpenModel} setOpenModel={this.setOpenModel} addNewClient={this.addNewClient} />
+
+        <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '1%', backgroundColor: "#f5f7f7" }}>
+            <Button color="primary" onClick={() => this.setOpenModel(true)}>Add New Client</Button>
+            <Button color="primary" onClick={() => this.gridApi.setFilterModel(null)}>Clear</Button>
+          </div>
+
         <div className="ag-theme-balham" style={{ flex: 1 }}>
           <AgGridReact
             animateRows
@@ -188,12 +207,14 @@ class Client extends React.Component {
             getRowNodeId={this.state.getRowNodeId}
             onGridReady={this.onGridReady}
             cacheBlockSize={this.limit}
+            rowHeight={50}
           >
           </AgGridReact>
         </div>
+
       </>
     );
   }
 }
 
-export default Client;
+export default RequireAuth(Client);

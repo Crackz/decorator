@@ -1,8 +1,8 @@
 import { PropTypes } from "prop-types";
 import React from "react";
+import { connect } from "react-redux";
 import { Link, NavLink as NavLinkRRD } from "react-router-dom";
 import { Col, Collapse, Container, DropdownItem, DropdownMenu, DropdownToggle, Media, Nav, Navbar, NavbarBrand, NavItem, NavLink, Row, UncontrolledDropdown } from "reactstrap";
-import { connect } from "react-redux";
 import * as actions from '../../store/actions';
 
 
@@ -43,10 +43,10 @@ class Sidebar extends React.Component {
             activeClassName="active"
             style={{ textAlign: 'center' }}
           >
-              <i className={prop.icon} />
-              <span className="p-2">
-                {prop.name}
-              </span>
+            <i className={prop.icon} />
+            <span className="p-2">
+              {prop.name}
+            </span>
           </NavLink>
         </NavItem>
       );
@@ -85,15 +85,16 @@ class Sidebar extends React.Component {
           </button>
           {/* Brand */}
           {logo ? (
-            <NavbarBrand className="pt-0" {...navbarBrandProps}>
-              <img
-                alt={logo.imgAlt}
-                className="navbar-brand-img"
-                src={logo.imgSrc}
-              />
-            </NavbarBrand>
+            <>
+              <NavbarBrand className="pt-0" {...navbarBrandProps}>
+                <img
+                  alt={logo.imgAlt}
+                  className="navbar-brand-img"
+                  src={logo.imgSrc}
+                />
+              </NavbarBrand>
+            </>
           ) : null}
-
 
           {/* When it's Collaped */}
           <Nav className="align-items-center d-md-none">

@@ -11,8 +11,6 @@ const Login = (props) => {
 
   const { handleSubmit, register, errors } = useForm();
 
-
-
   const onSubmit = async values => {
     if (values.phone)
       values.username = values.phone;
