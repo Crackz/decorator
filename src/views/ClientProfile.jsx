@@ -1,15 +1,22 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import Axios from "axios";
 import { AgGridReact } from "ag-grid-react/lib/agGridReact";
+import Axios from "axios";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Button, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
+import { LoadingSpinner } from "../components/Shared/LoadingSpinner";
 import RequireAuth from '../components/Shared/RequireAuth';
+import PhoneModal from '../components/Modals/PhoneModal';
+import AddressModal from '../components/Modals/AddressModal';
+import ClientModal from '../components/Modals/ClientModal';
 
 const ClientProfile = (props) => {
-  const [clientData, setClientData] = useState({})
+  const [client, setClient] = useState({})
   const [isFetching, setFetching] = useState(false);
+  const [isPhoneModelOpened, setPhoneModelOpened] = useState(false);
+  const [isAddressModelOpened, setAddressModelOpened] = useState(false);
+  const [isClientModelOpened, setClientModelOpened] = useState(false);
+
   const { profileId } = useParams();
   const limit = 50;
 
@@ -21,7 +28,6 @@ const ClientProfile = (props) => {
         field: "_id",
         width: 50,
         minWidth: 40,
-        sortable: false,
         cellClass: "grid-cell-centered",
         cellRendererFramework: function (params) {
           if (params.value !== undefined) {
@@ -41,7 +47,6 @@ const ClientProfile = (props) => {
         minWidth: 100,
         width: 50,
         cellClass: "grid-cell-centered",
-        sortable: false,
       },
       {
         headerName: "notes", field: "notes",
@@ -53,10 +58,8 @@ const ClientProfile = (props) => {
       }
     ],
     defaultColDef: {
-      sortable: true,
       resizable: true,
     },
-    rowSelection: "multiple",
     rowModelType: "infinite",
     paginationPageSize: 7,
     maxConcurrentDatasourceRequests: 1,
@@ -65,8 +68,6 @@ const ClientProfile = (props) => {
       return item._id;
     },
   }
-
-
 
 
   const getPaginatedData = async (params) => {
@@ -121,7 +122,7 @@ const ClientProfile = (props) => {
         headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` },
       });
 
-      setClientData(res.data);
+      setClient(res.data);
     } catch (error) {
       alert(error);
     }
@@ -134,22 +135,81 @@ const ClientProfile = (props) => {
     fetchClientData();
   }, [])
 
+  const renderClientActions = () => {
+    return (
+      <div style={{ textAlign: 'center', cursor: 'pointer', marginRight: 15 }}>
+        <UncontrolledDropdown>
+          <DropdownToggle tag="span">
+            <i className="fas fa-ellipsis-h"></i>
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 40 }} onClick={() => setClientModelOpened(true)}>
+                <i style={{ color: "#5e72e4" }} className="fas fa-user-edit mr-1"></i>
+                <span>Edit</span>
+              </div>
+            </DropdownItem>
+            <DropdownItem>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 40 }}>
+                <i style={{ color: '#f5365c' }} className="fas fa-trash-alt mr-1"></i>
+                <span>Delete</span>
+              </div>
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>)
+  }
+
+  const renderClientContact = () => {
+    return (
+      <div style={{ display: "flex", flexDirection: 'column' }}>
+        <span style={{ borderBottom: '1px solid #ccc', marginBottom: 10, textAlign: 'center' }}>{client.name}</span>
+        <div className="clientData" style={{ display: 'flex', justifyContent: "space-between" }}>
+          <div className="icon-sm icon-shape bg-green text-white rounded-circle shadow" style={{ cursor: 'pointer' }}
+            onClick={() => setPhoneModelOpened(true)}>
+            <i className="fa fa-phone fa-rotate-90"></i>
+          </div>
+          <div className="icon-sm icon-shape bg-blue text-white rounded-circle shadow" style={{ cursor: 'pointer' }}
+            onClick={() => setAddressModelOpened(true)}>
+            <i className="fa fa-address-book"></i>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
+      {
+        isPhoneModelOpened && <PhoneModal phones={(client && client.phones) || []} isOpened={isPhoneModelOpened}
+          setOpened={setPhoneModelOpened} />
+      }
+      {
+        isAddressModelOpened && <AddressModal address={client.address} isOpened={isAddressModelOpened}
+          setOpened={setAddressModelOpened} />
+      }
+      {
+        isClientModelOpened && <ClientModal setOpen={setClientModelOpened} isOpenModel={isClientModelOpened}
+          updatedClientHandler={(client) => setClient(client)}
+          existingClient={client} />
+      }
       <div style={{ display: 'flex', height: '100%', flexDirection: 'column', backgroundColor: "#f5f7f7" }}>
-        <div style={{ display: 'flex', margin: 20 }}>
-          <span style={{ flex: 1 }}>Orders</span>
-          <span style={{ flex: 1, alignSelf: 'center' }}>{clientData.name}</span>
+        <div style={{ display: 'flex', margin: 10, justifyContent: "space-between", alignItems: 'center' }}>
+          <Button color="primary">Add New Order</Button>
+
+          {Object.keys(client).length > 0 && renderClientContact()}
+
+          {Object.keys(client).length > 0 && renderClientActions()}
+
+          {isFetching && <LoadingSpinner />}
         </div>
 
         <div className="ag-theme-balham" style={{ flex: 1 }}>
           <AgGridReact
             animateRows
             columnDefs={tableDataOpts.columnDefs}
-            floatingFilter={true}
             defaultColDef={tableDataOpts.defaultColDef}
             rowSelection={tableDataOpts.rowSelection}
-            rowDeselection={true}
             rowModelType={tableDataOpts.rowModelType}
             maxConcurrentDatasourceRequests={tableDataOpts.maxConcurrentDatasourceRequests}
             infiniteInitialRowCount={tableDataOpts.infiniteInitialRowCount}

@@ -5,8 +5,8 @@ import axios from 'axios';
 import React from "react";
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import { ClientModal } from './ClientModal';
 import RequireAuth from '../components/Shared/RequireAuth';
+import ClientModal from '../components/Modals/ClientModal';
 
 class Client extends React.Component {
   limit = 50;
@@ -186,12 +186,14 @@ class Client extends React.Component {
     return (
       <>
 
-        <ClientModal isOpenModel={this.state.isOpenModel} setOpenModel={this.setOpenModel} addNewClient={this.addNewClient} />
-
+        {
+          this.state.isOpenModel && <ClientModal isOpenModel={this.state.isOpenModel} setOpen={this.setOpenModel}
+            addNewClient={this.addNewClient} />
+        }
         <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '1%', backgroundColor: "#f5f7f7" }}>
-            <Button color="primary" onClick={() => this.setOpenModel(true)}>Add New Client</Button>
-            <Button color="primary" onClick={() => this.gridApi.setFilterModel(null)}>Clear</Button>
-          </div>
+          <Button color="primary" onClick={() => this.setOpenModel(true)}>Add New Client</Button>
+          <Button color="primary" onClick={() => this.gridApi.setFilterModel(null)}>Clear</Button>
+        </div>
 
         <div className="ag-theme-balham" style={{ flex: 1 }}>
           <AgGridReact

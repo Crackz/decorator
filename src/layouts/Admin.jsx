@@ -6,6 +6,7 @@ import routes from "routes.js";
 import Client from '../views/Client';
 import ClientProfile from '../views/ClientProfile';
 import Index from '../views/Index';
+import RequireAuth from '../components/Shared/RequireAuth';
 
 class Admin extends React.Component {
   componentDidUpdate(e) {
@@ -43,7 +44,7 @@ class Admin extends React.Component {
           }}
         />
 
-        <div className="main-content" ref="mainContent" style={{ display: "flex" }}>
+        <div className="main-content" ref="mainContent" style={{ display: "flex", flex: 1 }}>
           <AdminNavbar
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
@@ -61,4 +62,4 @@ class Admin extends React.Component {
 
 
 
-export default Admin;
+export default RequireAuth(Admin);

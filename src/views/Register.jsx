@@ -38,7 +38,8 @@ const Register = (props) => {
   let profileImgInput;
   return (
     <>
-      <Col lg="6" md="8">
+      <div>
+
         <Card className="bg-secondary shadow border-0">
           <CardBody className="px-lg-5 py-lg-5">
             <Form onSubmit={handleSubmit(onSubmit)}>
@@ -151,11 +152,11 @@ const Register = (props) => {
         <Row className="mt-3">
           <Col className="text-right" xs="2">
             <Link to="/auth/login" >
-              <Button color="primary" outline disabled={props.isAuthenticating} onClick={props.clearErrors}>Login</Button>
+              <Button color="white" outline disabled={props.isAuthenticating} onClick={props.clearErrors}>Login</Button>
             </Link>
           </Col>
         </Row>
-      </Col>
+      </div>
     </>
   );
 

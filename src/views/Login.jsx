@@ -20,56 +20,56 @@ const Login = (props) => {
 
   return (
     <>
-      <Col lg="5" md="7">
-        <Card className="bg-secondary shadow border-0">
-          <CardBody className="px-lg-5 py-lg-5">
-            <Form role="form" onSubmit={handleSubmit(onSubmit)}>
-              <FormGroup className="mb-3">
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="fa fa-phone fa-rotate-90" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input name="phone" placeholder="phone" type="text" innerRef={register({ required: true })} />
-                  <FormFeedback invalid={(errors.phone && errors.phone.type === 'required') ? "true" : "false"}>
-                    يرجي ادخال رقم الهاتف
+      <div>
+          <Card className="bg-secondary shadow border-0">
+            <CardBody className="px-lg-6 pt-lg-6">
+              <Form role="form" onSubmit={handleSubmit(onSubmit)}>
+                <FormGroup className="mb-3">
+                  <InputGroup className="input-group-alternative">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="fa fa-phone fa-rotate-90" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input name="phone" placeholder="phone" type="text" innerRef={register({ required: true })} />
+                    <FormFeedback invalid={(errors.phone && errors.phone.type === 'required') ? "true" : "false"}>
+                      يرجي ادخال رقم الهاتف
                   </FormFeedback>
-                </InputGroup>
-              </FormGroup>
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input name="password" placeholder="Password" type="password" innerRef={register({ required: true })} />
-                  <FormFeedback invalid={(errors.password && errors.password.type === 'required') ? "true" : "false"}>
-                    يرجي ادخال كلمة السر
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup className="input-group-alternative">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-lock-circle-open" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input name="password" placeholder="Password" type="password" innerRef={register({ required: true })} />
+                    <FormFeedback invalid={(errors.password && errors.password.type === 'required') ? "true" : "false"}>
+                      يرجي ادخال كلمة السر
                   </FormFeedback>
-                </InputGroup>
-              </FormGroup>
+                  </InputGroup>
+                </FormGroup>
 
-              <div className="text-center">
-                <Button className="my-4" color="primary" type="submit">
-                  <Link to="/auth/login" />
-                  {props.isAuthenticating ? <LoadingSpinner /> : "Login"}
-                </Button>
-              </div>
-            </Form>
+                <div className="text-center">
+                  <Button color="primary" type="submit">
+                    <Link to="/auth/login" />
+                    {props.isAuthenticating ? <LoadingSpinner /> : "Login"}
+                  </Button>
+                </div>
+              </Form>
 
-            {props.apiErrors && props.apiErrors.map((apiError) => <AppAlert message={apiError.message} key={apiError.param || Math.floor((Math.random() * 1000))} />)}
-          </CardBody>
-        </Card>
-        <Row className="mt-3">
-          <Col className="text-right" xs="12">
-            <Link to="/auth/register" >
-              <Button color="primary" outline disabled={props.isAuthenticating} onClick={props.clearErrors}>Create new account</Button>
-            </Link>
-          </Col>
-        </Row>
-      </Col>
+              {props.apiErrors && props.apiErrors.map((apiError) => <AppAlert message={apiError.message} key={apiError.param || Math.floor((Math.random() * 1000))} />)}
+            </CardBody>
+          </Card>
+          <Row className="mt-3">
+            <Col className="text-right" xs="12">
+              <Link to="/auth/register" >
+                <Button color="white" outline disabled={props.isAuthenticating} onClick={props.clearErrors}>Create new account</Button>
+              </Link>
+            </Col>
+          </Row>
+      </div>
     </>
   );
 }

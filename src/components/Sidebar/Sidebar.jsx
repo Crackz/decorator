@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link, NavLink as NavLinkRRD } from "react-router-dom";
 import { Col, Collapse, Container, DropdownItem, DropdownMenu, DropdownToggle, Media, Nav, Navbar, NavbarBrand, NavItem, NavLink, Row, UncontrolledDropdown } from "reactstrap";
 import * as actions from '../../store/actions';
+import RequireAuth from "../Shared/RequireAuth";
 
 
 class Sidebar extends React.Component {
@@ -195,4 +196,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(RequireAuth(Sidebar));

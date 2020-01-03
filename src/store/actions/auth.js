@@ -36,7 +36,7 @@ export function register(registerData, history) {
 			if (error.response) {
 				apiErrors = apiErrors.concat(error.response.data.error.errors);
 			} else {
-				apiErrors.push({ message: 'try again', param: 'tryAgain' });
+				apiErrors.push({ message: 'تاكد من الانترنت وحاول مرة اخري', param: 'tryAgain' });
 			}
 
 			dispatch({
@@ -68,7 +68,7 @@ export function login(loginData, history) {
 			if (error.response) {
 				apiErrors = apiErrors.concat(error.response.data.error.errors);
 			} else {
-				apiErrors.push({ message: 'try again', param: 'tryAgain' });
+				apiErrors.push({ message: 'تاكد من الانترنت وحاول مرة اخري', param: 'tryAgain' });
 			}
 
 			dispatch({

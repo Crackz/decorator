@@ -166,6 +166,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
 
 body {
+  border: 2px solid red;
   margin: 0;
   font-family: Open Sans, sans-serif;
   font-size: 1rem;
@@ -5764,6 +5765,10 @@ button.bg-darker:focus {
 .ml-5,
 .mx-5 {
   margin-left: 3rem !important; }
+
+.mt--12,
+.my--12 {
+    margin-top: -12rem !important; }
 
 .m--9 {
   margin: -10rem !important; }

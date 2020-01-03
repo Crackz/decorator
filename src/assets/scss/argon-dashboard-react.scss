@@ -77,8 +77,16 @@
   font-style: normal;
 }
 
-body {
-  font-family: helvetica;
+@font-face {
+  font-family: "cairo";
+  src: url("../fonts/cairo/Cairo-Regular.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
 }
 
 .avatar-wrapper {
@@ -206,7 +214,71 @@ label {
   text-align: center;
 }
 
-
 .ag-header-group-cell-with-group {
-  background-color: #00E7B1;
+  background-color: #00e7b1;
+}
+
+.phone-list {
+  margin: 0 auto;
+}
+.phone-list ul {
+  list-style-type: none;
+  list-style-type: decimal;
+  margin: 0;
+  margin-left: 1em;
+  padding: 0;
+  counter-reset: li-counter;
+}
+.phone-list ul li {
+  position: relative;
+  margin-bottom: 1.5em;
+  padding: 0.5em;
+  background-color: #f5f7f7;
+}
+
+.phone-list ul li:hover {
+  background-color: #ccc;
+  color: white;
+}
+
+.phone-list ul li:before {
+  position: absolute;
+  top: -0.2em;
+  left: -0.8em;
+  width: 1.8em;
+  height: 1.2em;
+  font-size: 2em;
+  line-height: 1.2;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  background-color: #5e72e4;
+  transform: rotate(-20deg);
+  -ms-transform: rotate(-20deg);
+  -webkit-transform: rotate(-20deg);
+  z-index: 99;
+  overflow: hidden;
+  content: counter(li-counter);
+  counter-increment: li-counter;
+}
+
+.authContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.authFormContainer {
+  min-width: 40% !important;
+}
+
+#authLogo {
+  width: 20%;
+  height: auto;
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  z-index: 100;
 }

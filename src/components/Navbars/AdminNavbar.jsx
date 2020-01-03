@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { DropdownItem, DropdownMenu, DropdownToggle, Media, Nav, Navbar, UncontrolledDropdown } from "reactstrap";
 import * as actions from '../../store/actions';
+import RequireAuth from "../Shared/RequireAuth";
 
 
 const AdminNavbar = (props) => {
 
   return (
     <>
-      <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
-        <Link className="h4 mb-0 ml-3 text-white text-uppercase d-none d-lg-inline-block" to="/" >
+      <Navbar className="navbar-top navbar-dark d-none d-md-flex" expand="md" id="navbar-main">
+        <Link className="h4 mb-0 ml-3 text-white text-uppercase d-lg-inline-block" to="/" >
           {props.brandText}
         </Link>
         <Nav className="align-items-center d-none d-md-flex" navbar>
@@ -56,4 +57,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminNavbar);
+export default connect(mapStateToProps, mapDispatchToProps)(RequireAuth(AdminNavbar));
