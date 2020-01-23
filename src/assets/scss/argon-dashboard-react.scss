@@ -70,23 +70,24 @@
 // React differences
 @import "react/react-differences";
 
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
+
 @font-face {
-  font-family: "helvetica";
+  font-family: helvetica;
   src: url("../fonts/helvetica.ttf") format("ttf");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "cairo";
+  font-family: cairo;
   src: url("../fonts/cairo/Cairo-Regular.ttf") format("ttf");
   font-weight: normal;
   font-style: normal;
 }
 
-#root {
-  min-height: 100vh;
-  display: flex;
+body {
+  font-family: cairo, helvetica;
 }
 
 .avatar-wrapper {
@@ -138,14 +139,6 @@
   font-size: large;
   width: 100%;
 }
-
-// .switch-wrapper {
-// 	position: relative;
-//   }
-
-//   .switch-wrapper > div {
-// 	position: absolute;
-//   }
 
 .grid-cell-centered {
   text-align: center;
@@ -268,10 +261,7 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.authFormContainer {
-  min-width: 40% !important;
+  height: 100vh;
 }
 
 #authLogo {
@@ -281,4 +271,47 @@ label {
   left: 10px;
   top: 20px;
   z-index: 100;
+}
+
+.edit-notes-button:hover {
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #427388;
+}
+
+#orderSyncBtn {
+  box-sizing: border-box;
+  margin: auto;
+  border: solid 5px #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  font: 20px Helvetica;
+  line-height: 50px;
+  text-align: center;
+  background: #f5365c;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.4s ease-in-out;
+  transform: scale(1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    transform: scale(0.99);
+  }
+
+  &.press {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    transform: scale(0.98);
+  }
+}
+
+.cell-wrap-text {
+  white-space: normal !important;
+}
+
+.ag-theme-material .ag-row .ag-cell-data-changed {
+  background-color: #ec0c38 !important;
 }

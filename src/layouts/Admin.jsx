@@ -7,59 +7,79 @@ import Client from '../views/Client';
 import ClientProfile from '../views/ClientProfile';
 import Index from '../views/Index';
 import RequireAuth from '../components/Shared/RequireAuth';
+import OrderDetails from '../views/OrderDetails';
+import NotFound from '../views/NotFound';
+import LoadingOverlay from 'react-loading-overlay';
+import Order from "../views/Order";
+import User from "../views/User";
+import Forbidden from "../views/Forbidden";
+import { connect } from "react-redux";
 
 class Admin extends React.Component {
-  componentDidUpdate(e) {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    this.refs.mainContent.scrollTop = 0;
+  state = {
+    navbarOpts: {
+      text: 'Home',
+      hide: false
+    }
   }
 
-  getBrandText = path => {
-    console.log(this.props.location.pathname, 'this.props.location.pathname');
-
-    for (let i = 0; i < routes.length; i++) {
-      if (
-        this.props.location.pathname.indexOf(
-          routes[i].layout + routes[i].path
-        ) !== -1
-      ) {
-        return routes[i].name;
-      }
-    }
-    return "Brand";
-  };
-
+  setNavbarOpts(navbarOpts = {}) {
+    this.setState({ navbarOpts: { ...this.state.navbarOpts, ...navbarOpts } });
+  }
 
   render() {
+    const setNavbarOpts = this.setNavbarOpts.bind(this);
     return (
       <>
-        <Sidebar
-          {...this.props}
-          routes={routes.filter((route) => route.path === '/index' || route.path === '/clients')}
-          logo={{
-            innerLink: "/dashboard/index",
-            imgSrc: require("assets/img/brand/logo.png"),
-            imgAlt: "logo"
-          }}
-        />
+        <LoadingOverlay active={this.state.activeLoadingOverlay}>
 
-        <div className="main-content" ref="mainContent" style={{ display: "flex", flex: 1 }}>
-          <AdminNavbar
+          <Sidebar
             {...this.props}
-            brandText={this.getBrandText(this.props.location.pathname)}
+            routes={routes.filter((route) => {
+              if (route.layout === '/dashboard' && (route.allowedRoles[0] === '*' || route.allowedRoles.some((el) => this.props.currentUser.roles.includes(el))))
+                return true;
+                
+              return false;
+            })}
+
+            logo={{
+              innerLink: "/dashboard/index",
+              imgSrc: require("assets/img/brand/logo.png"),
+              imgAlt: "logo"
+            }}
           />
-          <Switch>
-            <Route exact path="/dashboard/index" component={Index} />
-            <Route path="/dashboard/clients/profile/:profileId" component={ClientProfile} />
-            <Route path="/dashboard/clients" component={Client} />
-          </Switch>
-        </div>
+
+          <div className="main-content" ref="mainContent" style={{ display: "flex", flex: 1 }}>
+            <AdminNavbar navbarOpts={this.state.navbarOpts} locationPathName={this.props.location.pathname} history={this.props.history} />
+
+            {
+              (!this.props.currentUser.roles.includes('SUPER_ADMIN') && !this.props.currentUser.roles.includes('ADMIN')) ?
+                <Forbidden /> :
+                <Switch>
+                  <Route exact path="/dashboard/index" render={props => <Index {...props} setNavbarOpts={setNavbarOpts} />} />
+                  <Route path="/dashboard/clients/:clientId/orders/:orderId" render={props => <OrderDetails {...props}
+                    setNavbarOpts={setNavbarOpts} />}
+                  />
+                  <Route path="/dashboard/clients/:clientId/profile" render={props => <ClientProfile {...props}
+                    setNavbarOpts={setNavbarOpts} />} />
+                  <Route path="/dashboard/clients" render={props => <Client {...props} setNavbarOpts={setNavbarOpts} />} />
+                  <Route path="/dashboard/orders" render={props => <Order {...props} setNavbarOpts={setNavbarOpts} />} />
+                  <Route path="/dashboard/users" render={props => <User {...props} setNavbarOpts={setNavbarOpts} />} />
+                  <Route path="/dashboard/forbidden" render={props => <Forbidden {...props} setNavbarOpts={setNavbarOpts} />} />
+                  <Route path="/dashboard/404" render={props => <NotFound {...props} setNavbarOpts={setNavbarOpts} />} />
+                </Switch>
+            }
+          </div>
+        </LoadingOverlay>
       </>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser
+  }
+}
 
-
-export default RequireAuth(Admin);
+export default connect(mapStateToProps)(RequireAuth(Admin));

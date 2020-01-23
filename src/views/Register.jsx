@@ -8,7 +8,7 @@ import { LoadingSpinner } from '../components/Shared/LoadingSpinner';
 import * as actions from '../store/actions';
 
 const Register = (props) => {
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors } = useForm(); 
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreviewUrl, setImgPreviewUrl] = useState(null);

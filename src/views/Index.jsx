@@ -1,14 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardTitle } from "reactstrap";
-import RequireAuth from '../components/Shared/RequireAuth';
 
 class Index extends React.Component {
+  componentWillMount() {
+    this.props.setNavbarOpts({ text: 'Home' });
+  }
+
   render() {
     return (
       <>
         <div style={{ flex: 1, flexDirection: 'row', display: "flex", alignItems: 'center' }}>
-          <div style={{ flex: 1, margin: "5%"}}>
+          <div style={{ flex: 1, margin: "5%" }}>
             <Link to="/dashboard/clients">
               <Card className="card-stats mb-4 mb-xl-0 text-center bg-">
                 <CardBody>
@@ -23,16 +26,18 @@ class Index extends React.Component {
           </div>
 
           <div style={{ flex: 1, margin: "5%", }}>
-            <Card className="card-stats mb-4 mb-xl-0 text-center bg-">
-              <CardBody>
-                <div className="icon-lg icon-shape bg-info text-white rounded-circle shadow">
-                  <i className="ni ni-collection mr-1" />
-                </div>
-              </CardBody>
+            <Link to="/dashboard/orders">
+              <Card className="card-stats mb-4 mb-xl-0 text-center bg-">
+                <CardBody>
+                  <div className="icon-lg icon-shape bg-info text-white rounded-circle shadow">
+                    <i className="fas fa-database mr-1" />
+                  </div>
+                </CardBody>
 
-              <CardTitle tag="h5" className="text-uppercase text-muted mb-2" >Orders</CardTitle>
-            </Card>
+                <CardTitle tag="h5" className="text-uppercase text-muted mb-2" >Orders</CardTitle>
+              </Card>
 
+            </Link>
           </div>
 
         </div>
@@ -41,4 +46,4 @@ class Index extends React.Component {
   }
 }
 
-export default RequireAuth(Index);
+export default Index;

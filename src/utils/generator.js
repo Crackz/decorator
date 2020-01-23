@@ -1,1 +1,1 @@
-export const generateId = () => Math.floor(Math.random() * 1000)
+export const generateId = () => Math.floor(Math.random() * 10000)

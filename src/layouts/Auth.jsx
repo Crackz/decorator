@@ -21,18 +21,15 @@ const Auth = () => {
 
 
   return (
-    <>
-
-      <div className="authContainer">
-        <div>
-          <img id="authLogo" alt="logo" src={require("assets/img/brand/logo.png")} />
-          <h1>Welcome !</h1>
-        </div>
-        <div className="authFormContainer">
-          <Switch>{getRoutes(routes)}</Switch>
-        </div>
+    <div className="authContainer">
+      <div>
+        <img id="authLogo" alt="logo" src={require("assets/img/brand/logo.png")} />
+        <h1>Welcome !</h1>
       </div>
-    </>
+      <div style={{minWidth: '40%'}}>
+        <Switch>{getRoutes(routes)}</Switch>
+      </div>
+    </div>
   );
 }
 

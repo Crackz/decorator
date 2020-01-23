@@ -44,7 +44,7 @@ const ClientModal = (props) => {
             data: values,
             headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` },
         });
-        props.setOpen(false);
+        props.setOpened(false);
         e.target.reset();
         props.updatedClientHandler(res.data)
     }
@@ -57,7 +57,7 @@ const ClientModal = (props) => {
             data: values,
             headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` },
         });
-        props.setOpen(false);
+        props.setOpened(false);
         e.target.reset();
         props.addNewClient(res.data)
     };
@@ -88,8 +88,8 @@ const ClientModal = (props) => {
     }
 
     return (
-        <Modal isOpen={props.isOpenModel} style={{ textAlign: 'center' }}>
-            <ModalHeader toggle={() => props.setOpen(false)}>Create New Client</ModalHeader>
+        <Modal isOpen={props.isOpened} style={{ textAlign: 'center' }}>
+            <ModalHeader toggle={() => props.setOpened(false)}>{props.existingClient ? `Updating Client #${props.existingClient._id}` : "Create New Client"}</ModalHeader>
             <Form role="form" onSubmit={handleSubmit(onSubmit)}>
                 <ModalBody style={{ display: 'flex', flexDirection: 'column' }}>
                     <FormGroup>
@@ -146,7 +146,7 @@ const ClientModal = (props) => {
                 </ModalBody>
                 <ModalFooter>
                     {renderSubmitButton()}
-                    <Button color="secondary" onClick={() => props.setOpen(false)}>Cancel</Button>
+                    <Button color="secondary" onClick={() => props.setOpened(false)}>Cancel</Button>
                 </ModalFooter>
             </Form>
 

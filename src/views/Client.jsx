@@ -1,15 +1,16 @@
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 import React from "react";
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import RequireAuth from '../components/Shared/RequireAuth';
 import ClientModal from '../components/Modals/ClientModal';
+import { LoadingSpinner } from '../components/Shared/LoadingSpinner';
+
 
 class Client extends React.Component {
-  limit = 50;
+  limit = 20;
   gridApi;
   constructor(props) {
     super(props);
@@ -19,35 +20,36 @@ class Client extends React.Component {
         {
           headerName: "View",
           field: "_id",
-          width: 50,
-          minWidth: 40,
+          width: 40,
+          minWidth: 30,
           sortable: false,
           cellClass: "grid-cell-centered",
           cellRendererFramework: function (params) {
-            if (params.value !== undefined) {
+            if (params.value !== undefined)
               return (
-                <Link to={`/dashboard/clients/profile/${params.value}`}>
+                <Link to={`/dashboard/clients/${params.value}/profile`}>
                   <i className="fa fa-eye fa-lg" />
                 </Link>
               );
-            } else {
-              return (<img alt="loading..." src="https://raw.githubusercontent.com/ag-grid/ag-grid/master/packages/ag-grid-docs/src/images/loading.gif" />)
-            }
+            else
+              return <LoadingSpinner />
           },
         },
         {
           headerName: "ID",
           field: "_id",
-          minWidth: 40,
-          width: 50,
+          minWidth: 55,
+          width: 55,
           cellClass: "grid-cell-centered",
           sortable: false,
         },
-
         {
           headerName: "Name",
           field: "name",
           minWidth: 100,
+          autoHeight: true,
+          cellClass: "cell-wrap-text",
+
           filter: "agTextColumnFilter",
           floatingFilterComponentParams: { suppressFilterButton: true },
           filterParams: {
@@ -57,7 +59,8 @@ class Client extends React.Component {
           suppressMenu: true
 
         }, {
-          headerName: "Phones", field: "phones",
+          headerName: "Phones",
+          field: "phones",
           filter: "agTextColumnFilter",
           floatingFilterComponentParams: { suppressFilterButton: true },
           filterParams: {
@@ -78,7 +81,16 @@ class Client extends React.Component {
         {
           headerName: "Gender",
           field: "gender",
-          sortable: true
+          sortable: false,
+          cellRendererFramework: function (params) {
+            if (params.value == null)
+              return <span></span>
+
+            return <i className={`fas fa-${params.value === 'MALE' ? 'male' : 'female'} fa-2x`}
+              style={{
+                  color: `${params.value === 'MALE' ? '#02A3FE' : '#EC49A6'}`
+              }}></i>
+          }
         },
 
       ],
@@ -144,9 +156,6 @@ class Client extends React.Component {
 
   onGridReady = async params => {
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
-    params.api.resetRowHeights();
 
     const paginatedDataRequester = this.getPaginatedData.bind(this);
 
@@ -166,10 +175,13 @@ class Client extends React.Component {
         } catch (err) {
           params.failCallback();
         }
+
+        this.gridApi.sizeColumnsToFit();
+        this.gridApi.resetRowHeights();
       }
     }
 
-    params.api.setDatasource(dataSource);
+    this.gridApi.setDatasource(dataSource);
   };
 
 
@@ -182,41 +194,44 @@ class Client extends React.Component {
     this.gridApi.updateRowData({ add: [data], addIndex: 0 });
   }
 
+  componentWillMount() {
+    this.props.setNavbarOpts({ text: 'Clients' });
+  }
+
   render() {
     return (
       <>
-
         {
-          this.state.isOpenModel && <ClientModal isOpenModel={this.state.isOpenModel} setOpen={this.setOpenModel}
+          this.state.isOpenModel && <ClientModal isOpened={this.state.isOpenModel} setOpened={this.setOpenModel}
             addNewClient={this.addNewClient} />
         }
-        <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '1%', backgroundColor: "#f5f7f7" }}>
-          <Button color="primary" onClick={() => this.setOpenModel(true)}>Add New Client</Button>
-          <Button color="primary" onClick={() => this.gridApi.setFilterModel(null)}>Clear</Button>
-        </div>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }} className="bg-white">
+          <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '1%' }}>
+            <Button color="primary" onClick={() => this.setOpenModel(true)}>Add New Client</Button>
+            <Button color="primary" onClick={() => this.gridApi.setFilterModel(null)}>Clear</Button>
+          </div>
 
-        <div className="ag-theme-balham" style={{ flex: 1 }}>
-          <AgGridReact
-            animateRows
-            columnDefs={this.state.columnDefs}
-            floatingFilter={true}
-            defaultColDef={this.state.defaultColDef}
-            rowSelection={this.state.rowSelection}
-            rowDeselection={true}
-            rowModelType={this.state.rowModelType}
-            maxConcurrentDatasourceRequests={this.state.maxConcurrentDatasourceRequests}
-            infiniteInitialRowCount={this.state.infiniteInitialRowCount}
-            getRowNodeId={this.state.getRowNodeId}
-            onGridReady={this.onGridReady}
-            cacheBlockSize={this.limit}
-            rowHeight={50}
-          >
-          </AgGridReact>
+          <div className="ag-theme-material mx-1" style={{ flex: 1 }} >
+            <AgGridReact
+              animateRows
+              columnDefs={this.state.columnDefs}
+              floatingFilter={true}
+              defaultColDef={this.state.defaultColDef}
+              rowSelection={this.state.rowSelection}
+              rowDeselection={true}
+              rowModelType={this.state.rowModelType}
+              maxConcurrentDatasourceRequests={this.state.maxConcurrentDatasourceRequests}
+              infiniteInitialRowCount={this.state.infiniteInitialRowCount}
+              getRowNodeId={this.state.getRowNodeId}
+              onGridReady={this.onGridReady}
+              cacheBlockSize={this.limit}
+              >
+            </AgGridReact>
+          </div>
         </div>
-
       </>
     );
   }
 }
 
-export default RequireAuth(Client);
+export default Client;

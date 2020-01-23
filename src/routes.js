@@ -2,22 +2,41 @@ import Client from "views/Client.jsx";
 import Index from "views/Index.jsx";
 import Login from "views/Login.jsx";
 import Register from "views/Register.jsx";
-import RequireAuth from "./components/Shared/RequireAuth";
+import Order from "./views/Order";
+import User from "./views/User";
 
 var routes = [
   {
     path: "/index",
     name: "Home",
     icon: "ni ni-tv-2 text-primary",
-    component: RequireAuth(Index),
-    layout: "/dashboard"
+    component: Index,
+    layout: "/dashboard",
+    allowedRoles: ['*']
   },
   {
     path: "/clients",
     name: "Clients",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: RequireAuth(Client),
-    layout: "/dashboard"
+    icon: "fas fa-users text-red",
+    component: Client,
+    layout: "/dashboard",
+    allowedRoles: ['*']
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    icon: "fas fa-database text-info",
+    component: Order,
+    layout: "/dashboard",
+    allowedRoles: ['*']
+  },
+  {
+    path: "/users",
+    name: "Users",
+    icon: "fas fa-users-cog text-light",
+    component: User,
+    layout: "/dashboard",
+    allowedRoles: ['SUPER_ADMIN']
   },
   {
     path: "/login",
