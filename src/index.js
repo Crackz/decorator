@@ -1,4 +1,4 @@
-import 'assets/scss/argon-dashboard-react.scss';
+import 'assets/scss/main.scss';
 import 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css';
 import 'assets/vendor/nucleo/css/nucleo.css';
 import AdminLayout from 'layouts/Admin.jsx';

@@ -17,7 +17,7 @@ var routes = [
   {
     path: "/clients",
     name: "Clients",
-    icon: "fas fa-users text-red",
+    icon: "fas fa-users text-danger",
     component: Client,
     layout: "/dashboard",
     allowedRoles: ['*']
