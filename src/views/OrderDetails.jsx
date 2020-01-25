@@ -95,7 +95,6 @@ const OrderDetails = (props) => {
                 const formData = new FormData();
                 formData.append('products', JSON.stringify(products));
 
-                console.log('progressImages found: ', progressImages);
                 if (progressImages.length === 0)
                     formData.append('progressImgs', "[]");
                 else
@@ -173,34 +172,26 @@ const OrderDetails = (props) => {
 
             <div className="d-flex flex-grow-1 bg-white">
                 <div className="d-flex flex-grow-1 flex-column my-4 mx-4">
-                    <OrderDetailsHeader order={order} 
-                    onDeletingOrderHandler={onDeletingOrderHandler} 
-                    isLoading={isActiveOrderRequest} 
-                    onOrderStatusChanged={onOrderStatusChanged}
+                    <OrderDetailsHeader order={order}
+                        onDeletingOrderHandler={onDeletingOrderHandler}
+                        isLoading={isActiveOrderRequest}
+                        onOrderStatusChanged={onOrderStatusChanged}
                     />
 
-                    <div className="d-flex flex-grow-1 flex-column">
-                        <div className="d-flex flex-grow-1 my-3 flex-wrap">
-                            <div style={{ flex: 2, maxWidth: "70%" }} className="mr-2">
-                                <div>
-                                    <OrderProduct products={products} onProductChange={onProductChange}
-                                        ref={orderProductsRef} createdAt={order.createdAt} updatedAt={order.updatedAt} />
-                                </div>
-
-                                <div>
-                                    <OrderProgressImgs progressImages={progressImages} setProgressImages={updateProgressImgs} />
-                                </div>
+                    <div className="d-flex flex-grow-1 flex-column justify-content-start">
+                        <div className="d-flex flex-grow-1 my-3 flex-wrap flex-md-row flex-column justify-content-center">
+                            <div style={{ flex: '2 2 60%' }} className="order-lg-1 order-2 mr-sm-0 mr-md-3 my-lg-0 my-3">
+                                <OrderProduct products={products} onProductChange={onProductChange}
+                                    ref={orderProductsRef} createdAt={order.createdAt} updatedAt={order.updatedAt} />
                             </div>
-                            <div style={{ flex: 1 }} >
-                                <div style={{ minWidth: '30%' }}>
-                                    <div className="order-sm-2 shadow-lg rounded">
-                                        <OrderContact client={order.client} />
-                                    </div>
-
-                                    <div className="shadow-lg rounded mt-4">
-                                        <OrderNotes notes={notes} setNotes={updateNotes} />
-                                    </div>
-                                </div>
+                            <div style={{ flex: '1 1 30%' }} className="d-flex order-lg-2 order-1">
+                                <OrderContact client={order.client} />
+                            </div>
+                            <div style={{ flex: '2 2 60%' }} className="order-3 mr-sm-0 mr-md-3 mb-sm-3 mb-md-0">
+                                <OrderProgressImgs progressImages={progressImages} setProgressImages={updateProgressImgs} />
+                            </div>
+                            <div style={{ flex: '1 2 30%' }} className="order-4 d-flex shadow-lg rounded my-4">
+                                <OrderNotes notes={notes} setNotes={updateNotes} />
                             </div>
                         </div>
                     </div>

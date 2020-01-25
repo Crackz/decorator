@@ -19,32 +19,36 @@ const ClientProfile = (props) => {
 
   const { clientId } = useParams();
 
-  const renderClientActions = () => {
+  const renderClientContactAndActions = () => {
     return (
-      <div style={{ textAlign: 'center', cursor: 'pointer', marginRight: 15 }}>
-        <UncontrolledDropdown>
-          <DropdownToggle tag="span">
-            <i className="fas fa-ellipsis-h"></i>
-          </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem onClick={() => setUpdatingClientModelOpened(true)}>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 40 }}>
-                <i style={{ color: "#5e72e4" }} className="fas fa-user-edit mr-1"></i>
-                <span>Edit</span>
-              </div>
-            </DropdownItem>
-            <DropdownItem onClick={() => setDeletingClientModelOpened(true)}>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 40 }}>
-                <i style={{ color: '#f5365c' }} className="fas fa-trash-alt mr-1"></i>
-                <span>Delete</span>
-              </div>
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
+      <div className="d-flex flex-grow-1 align-items-center justify-content-end mr-2">
+        <ClientContact client={client} />
+
+        <div className="text-center ml-3" style={{ cursor: 'pointer' }}>
+          <UncontrolledDropdown>
+            <DropdownToggle tag="span">
+              <i className="fas fa-ellipsis-h"></i>
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem onClick={() => setUpdatingClientModelOpened(true)}>
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 40 }}>
+                  <i style={{ color: "#5e72e4" }} className="fas fa-user-edit mr-1"></i>
+                  <span>Edit</span>
+                </div>
+              </DropdownItem>
+              <DropdownItem onClick={() => setDeletingClientModelOpened(true)}>
+                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 40 }}>
+                  <i style={{ color: '#f5365c' }} className="fas fa-trash-alt mr-1"></i>
+                  <span>Delete</span>
+                </div>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </div>
       </div>)
+
   }
 
-  const renderClientContact = () => (<ClientContact client={client} />)
 
   const onDeletingClientHandler = async () => {
     setDeletingClient(true);
@@ -127,13 +131,11 @@ const ClientProfile = (props) => {
         />
       }
 
-      <div style={{ display: 'flex', height: '100%', flexDirection: 'column', padding: 10 }} className="bg-white">
-        <div style={{ display: 'flex', margin: "3%", justifyContent: "space-between", alignItems: 'center' }}>
+      <div className="d-flex flex-column p-10 bg-white flex-grow-1">
+        <div className="d-flex m-3 justify-content-between align-items-center">
           <Button color="primary" onClick={onOrderCeationHandler}>{isCreatingOrder ? <LoadingSpinner fontSize={18} /> : "Add New Order"}</Button>
 
-          {Object.keys(client).length > 0 && renderClientContact()}
-
-          {Object.keys(client).length > 0 && renderClientActions()}
+          {Object.keys(client).length > 0 && renderClientContactAndActions()}
 
           {isFetchingClient && <LoadingSpinner />}
         </div>

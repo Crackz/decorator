@@ -40,13 +40,12 @@ const OrderNotes = (props) => {
     }
 
     return (
-        <div className="d-flex flex-column">
+        <div className="flex-grow-1 d-flex flex-column">
             <div className="d-flex justify-content-between mx-2 my-2 align-item-center justify-content-center">
                 <h5>Notes:</h5>
                 {renderActions()}
             </div>
             <div className="mx-2" style={{ borderBottom: '1px dotted black' }} ></div>
-
             <div className="m-2 text-center">
                 {
                     isEditingMode ?
@@ -58,17 +57,20 @@ const OrderNotes = (props) => {
                                         type="textarea" name="text" id="exampleText"
                                         value={editorNotes}
                                         onChange={changeTextarea}
-                                        rows={20}
+                                        rows={10}
                                         ref={inputRef}
                                     />
                                 </FormGroup>
                             </Form>
                         )
                         :
-                        <span>{!props.notes ? 'لا يوجد اي ملاحظات' : props.notes}</span>
+                        <span style={{
+                            display: "block",
+                            wordBreak: "break-all"
+                        }} >{!props.notes ? 'لا يوجد اي ملاحظات' : props.notes}</span>
                 }
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -46,10 +46,8 @@ class Client extends React.Component {
         {
           headerName: "Name",
           field: "name",
-          minWidth: 100,
-          autoHeight: true,
-          cellClass: "cell-wrap-text",
-
+          minWidth: 250,
+          cellClass: "grid-cell-centered",
           filter: "agTextColumnFilter",
           floatingFilterComponentParams: { suppressFilterButton: true },
           filterParams: {
@@ -61,6 +59,7 @@ class Client extends React.Component {
         }, {
           headerName: "Phones",
           field: "phones",
+          minWidth: 55,
           filter: "agTextColumnFilter",
           floatingFilterComponentParams: { suppressFilterButton: true },
           filterParams: {
@@ -70,6 +69,7 @@ class Client extends React.Component {
           suppressMenu: true
         }, {
           headerName: "Address", field: "address",
+          minWidth: 55,
           filter: "agTextColumnFilter",
           floatingFilterComponentParams: { suppressFilterButton: true },
           filterParams: {
@@ -81,6 +81,7 @@ class Client extends React.Component {
         {
           headerName: "Gender",
           field: "gender",
+          minWidth: 30,
           sortable: false,
           cellRendererFramework: function (params) {
             if (params.value == null)
@@ -88,7 +89,7 @@ class Client extends React.Component {
 
             return <i className={`fas fa-${params.value === 'MALE' ? 'male' : 'female'} fa-2x`}
               style={{
-                  color: `${params.value === 'MALE' ? '#02A3FE' : '#EC49A6'}`
+                color: `${params.value === 'MALE' ? '#02A3FE' : '#EC49A6'}`
               }}></i>
           }
         },
@@ -106,6 +107,9 @@ class Client extends React.Component {
       getRowNodeId: function (item) {
         return item._id;
       },
+      getRowHeight: function(params) {
+        return 28 * (Math.floor(params.data.name.length / 60) + 1);
+      }
     }
   }
 
@@ -198,6 +202,14 @@ class Client extends React.Component {
     this.props.setNavbarOpts({ text: 'Clients' });
   }
 
+  onColumnResized() {
+    this.gridApi.resetRowHeights();
+  }
+  
+  onCellValueChanged() {
+    this.gridApi.resetRowHeights();
+}
+
   render() {
     return (
       <>
@@ -224,8 +236,11 @@ class Client extends React.Component {
               infiniteInitialRowCount={this.state.infiniteInitialRowCount}
               getRowNodeId={this.state.getRowNodeId}
               onGridReady={this.onGridReady}
+              onColumnResized={this.onColumnResized.bind(this)}
+              onCellValueChanged={this.onCellValueChanged.bind(this)}
               cacheBlockSize={this.limit}
-              >
+              getRowHeight={this.state.getRowHeight}              
+            >
             </AgGridReact>
           </div>
         </div>

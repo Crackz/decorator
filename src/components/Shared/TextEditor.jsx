@@ -23,11 +23,11 @@ export default class TextEditor extends Component {
             startValue = '';
         } else if (props.charPress) {
             // if a letter was pressed, we start with the letter
-            startValue = props.charPress;
+            startValue = props.charPress | '';
             highlightAllOnFocus = false;
         } else {
             // otherwise we start with the current value
-            startValue = props.value;
+            startValue = props.value | '';
             if (props.keyPress === KEY_F2) {
                 highlightAllOnFocus = false;
             }
@@ -77,10 +77,6 @@ export default class TextEditor extends Component {
         return this.cancelBeforeStart;
     }
 
-    // reject changes
-    // isCancelAfterEnd() {
-    // };
-
     onKeyDown(event) {
         if (this.isLeftOrRight(event) || this.deleteOrBackspace(event)) {
             event.stopPropagation();
@@ -101,6 +97,10 @@ export default class TextEditor extends Component {
 
     isLeftOrRight(event) {
         return [37, 39].indexOf(event.keyCode) > -1;
+    }
+
+    isEnter(event) {
+        return [9].indexOf(event.keyCode) > -1;
     }
 
     handleChange(event) {

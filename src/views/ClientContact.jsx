@@ -19,14 +19,14 @@ const ClientContact = (props) => {
                 isAddressModelOpened && <AddressModal address={client.address} isOpened={isAddressModelOpened}
                     setOpened={setAddressModelOpened} />
             }
-            <div style={{ display: "flex", flexDirection: 'column', minWidth: "100px" }}>
-                <span style={{ borderBottom: '1px solid #ccc', marginBottom: 10, textAlign: 'center' }}>{client.name}</span>
-                <div className="clientData" style={{ display: 'flex', justifyContent: "space-between" }}>
-                    <div className="icon-sm icon-shape bg-green text-white rounded-circle shadow" style={{ cursor: 'pointer' }}
+            <div className="d-flex flex-column" style={{ minWidth: "100px" }}>
+                <span className="text-center mb-2" style={{ borderBottom: '1px solid #ccc' }}>{client.name}</span>
+                <div className="clientData d-flex justify-content-around">
+                    <div className="icon-sm icon-shape bg-success text-white rounded-circle shadow" style={{ cursor: 'pointer' }}
                         onClick={() => setPhoneModelOpened(true)}>
                         <i className="fa fa-phone fa-rotate-90"></i>
                     </div>
-                    <div className="icon-sm icon-shape bg-blue text-white rounded-circle shadow" style={{ cursor: 'pointer' }}
+                    <div className="icon-sm icon-shape bg-primary text-white rounded-circle shadow" style={{ cursor: 'pointer' }}
                         onClick={() => setAddressModelOpened(true)}>
                         <i className="fa fa-address-book"></i>
                     </div>

@@ -2,7 +2,10 @@ import { PropTypes } from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Link, NavLink as NavLinkRRD } from "react-router-dom";
-import { Col, Collapse, Container, DropdownItem, DropdownMenu, DropdownToggle, Media, Nav, Navbar, NavbarBrand, NavItem, NavLink, Row, UncontrolledDropdown } from "reactstrap";
+import {
+  Col, Collapse, Container, DropdownItem, DropdownMenu, DropdownToggle, Media, Nav, Navbar, NavbarBrand, NavItem,
+  NavLink, Row, UncontrolledDropdown
+} from "reactstrap";
 import * as actions from '../../store/actions';
 import RequireAuth from "../Shared/RequireAuth";
 
@@ -98,11 +101,11 @@ class Sidebar extends React.Component {
           ) : null}
 
           {/* When it's Collaped */}
-          <Nav className="align-items-center d-md-none">
+          <Nav className="align-items-center d-md-none" >
             <UncontrolledDropdown nav>
-              <DropdownToggle nav>
-                <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
+              <DropdownToggle nav >
+                <Media className="align-items-center" >
+                  <span className="avatar avatar-lg rounded-circle">
                     <img
                       alt="..."
                       src={this.props.currentUser.profileImg}

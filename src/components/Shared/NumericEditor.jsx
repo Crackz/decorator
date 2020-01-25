@@ -25,11 +25,11 @@ export default class NumericEditor extends Component {
             startValue = '';
         } else if (props.charPress) {
             // if a letter was pressed, we start with the letter
-            startValue = props.charPress;
+            startValue = props.charPress | '';
             highlightAllOnFocus = false;
         } else {
             // otherwise we start with the current value
-            startValue = props.value;
+            startValue = props.value | '';
             if (props.keyPress === KEY_F2) {
                 highlightAllOnFocus = false;
             }

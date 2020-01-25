@@ -13,9 +13,9 @@ class Index extends React.Component {
         <div style={{ flex: 1, flexDirection: 'row', display: "flex", alignItems: 'center' }}>
           <div style={{ flex: 1, margin: "5%" }}>
             <Link to="/dashboard/clients">
-              <Card className="card-stats mb-4 mb-xl-0 text-center bg-">
+              <Card className="card-stats mb-4 mb-xl-0 text-center">
                 <CardBody>
-                  <div className="icon-lg icon-shape bg-red text-white rounded-circle shadow">
+                  <div className="icon-lg icon-shape bg-danger text-white rounded-circle shadow">
                     <i className="fa fa-users fa-10x" />
                   </div>
                 </CardBody>

@@ -14,14 +14,21 @@ import Order from "../views/Order";
 import User from "../views/User";
 import Forbidden from "../views/Forbidden";
 import { connect } from "react-redux";
+import * as actions from '../store/actions';
 
 class Admin extends React.Component {
   state = {
+    isFetchingUser: false,
     navbarOpts: {
       text: 'Home',
       hide: false
     }
   }
+
+  async componentWillMount() {
+    this.props.fetchUser(this.props.currentUser._id);
+  }
+
 
   setNavbarOpts(navbarOpts = {}) {
     this.setState({ navbarOpts: { ...this.state.navbarOpts, ...navbarOpts } });
@@ -38,7 +45,7 @@ class Admin extends React.Component {
             routes={routes.filter((route) => {
               if (route.layout === '/dashboard' && (route.allowedRoles[0] === '*' || route.allowedRoles.some((el) => this.props.currentUser.roles.includes(el))))
                 return true;
-                
+
               return false;
             })}
 
@@ -82,4 +89,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(RequireAuth(Admin));
+
+const mapDisptachToProps = (disptach) => {
+  return {
+    fetchUser: (userId) => disptach(actions.fetchUser(userId))
+  }
+}
+
+export default connect(mapStateToProps, mapDisptachToProps)(RequireAuth(Admin));

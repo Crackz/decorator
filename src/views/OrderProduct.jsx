@@ -25,21 +25,26 @@ class OrderProduct extends Component {
             {
                 headerName: "السعر",
                 field: "price",
+                minWidth: 80,
+
                 cellEditor: 'numericEditor',
             },
             {
                 headerName: "الكمية",
                 field: "amount",
+                minWidth: 80,
                 cellEditor: 'numericEditor',
             },
             {
                 headerName: "الوحدة",
                 field: "unit",
+                minWidth: 80,
                 cellEditor: 'textEditor',
             },
             {
                 headerName: "الاجمالى",
                 field: 'totalPrice',
+                minWidth: 80,
                 editable: false,
                 suppressNavigable: true,
                 valueGetter: (params) => {
@@ -68,6 +73,7 @@ class OrderProduct extends Component {
 
     onGridReady = (params) => {
         this.gridApi = params.api;
+        params.columnApi.autoSizeColumns();
     }
 
     onFirstDataRendered = (params) => {
@@ -79,15 +85,18 @@ class OrderProduct extends Component {
             add: [{}],
             addIndex: 0
         });
+        this.gridApi.setFocusedCell(0, 'name')
         this.gridApi.startEditingCell({
             rowIndex: 0,
             colKey: "name"
         });
+
     }
 
     onDeletingProduct = () => {
         const selectedData = this.gridApi.getSelectedRows();
         this.gridApi.updateRowData({ remove: selectedData });
+        this.props.onProductChange();
     }
 
     onColumnResized() {
@@ -138,7 +147,7 @@ class OrderProduct extends Component {
                             <i className="far fa-calendar-alt"></i>
                         </div>
                     </div>
-                    <div style={{ borderBottom: '1px dotted black' }} ></div>
+                    <div style={{ borderBottom: '1px solid #ccc' }} ></div>
                     <div className="d-flex flex-grow-1" style={{ minHeight: '400px' }}>
                         <div className="ag-theme-material flex-grow-1">
                             <AgGridReact

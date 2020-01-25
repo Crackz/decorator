@@ -1,5 +1,6 @@
 import * as ActionTypes from '../reducers/actionTypes';
 import axios from 'axios';
+import { setUserToStorage } from './shared';
 
 function cleanUpAuth() {
 	localStorage.removeItem('token');
@@ -8,10 +9,6 @@ function cleanUpAuth() {
 
 function setTokenToStorage(token) {
 	localStorage.setItem('token', token);
-}
-
-function setUserToStorage(userData) {
-	localStorage.setItem('user', JSON.stringify(userData));
 }
 
 export function register(registerData, history) {
@@ -29,7 +26,7 @@ export function register(registerData, history) {
 			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: { user: res.data.user } });
 			setTokenToStorage(res.data.accessToken);
 			setUserToStorage(res.data.user);
-			history.push('/dashboard/index');
+			history.push({ pathname: '/dashboard/index', state: { authenticatedUser: res.data.user } });
 		} catch (error) {
 			let apiErrors = [];
 
@@ -61,7 +58,7 @@ export function login(loginData, history) {
 			dispatch({ type: ActionTypes.AUTH_SUCCESS, payload: { user: res.data.user } });
 			setTokenToStorage(res.data.accessToken);
 			setUserToStorage(res.data.user);
-			history.push('/dashboard/index');
+			history.push({ pathname: '/dashboard/index', state: { authenticatedUser: res.data.user } });
 		} catch (error) {
 			let apiErrors = [];
 
@@ -86,6 +83,40 @@ export const signout = (history) => {
 		dispatch({ type: ActionTypes.AUTH_SIGN_OUT });
 	};
 };
+
+
+export function fetchUser(userId) {
+	return async (dispatch) => {
+		try {
+			dispatch({ type: ActionTypes.AUTH_REFETCHING });
+
+			const res = await axios({
+				method: 'get',
+				url: `${process.env.REACT_APP_API_URL}/users/${userId}`,
+				headers: {
+					"Authorization": `Bearer ${localStorage.getItem('token')}`
+				}
+			});
+
+			setUserToStorage(res.data);
+			dispatch({ type: ActionTypes.AUTH_REFETCHING_SUCCESS, payload: { user: res.data } });
+		} catch (error) {
+			let apiErrors = [];
+
+			if (error.response) {
+				apiErrors = apiErrors.concat(error.response.data.error.errors);
+			} else {
+				apiErrors.push({ message: 'تاكد من الانترنت وحاول مرة اخري', param: 'tryAgain' });
+			}
+
+			dispatch({
+				type: ActionTypes.AUTH_REFETCHING_FAIL,
+				payload: apiErrors
+			});
+		}
+	};
+}
+
 
 export const clearErrors = () => {
 	return (dispatch) => {

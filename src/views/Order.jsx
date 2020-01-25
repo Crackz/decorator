@@ -19,12 +19,13 @@ class Order extends React.Component {
           headerName: "View",
           field: "_id",
           width: 40,
-          minWidth: 30,
+          minWidth: 40,
           cellClass: "grid-cell-centered",
           cellRendererFramework: function (params) {
-            if (params.value !== undefined)
+            console.log('params.data: ', params.data);
+            if (params.value !== undefined && params.data !== undefined && params.data.client !== undefined)
               return (
-                <Link to={`/dashboard/clients/${params.value}/orders/`}>
+                <Link to={`/dashboard/clients/${params.data.client._id}/orders/${params.value}`}>
                   <i className="fa fa-eye fa-lg" />
                 </Link>
               );

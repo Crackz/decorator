@@ -37,6 +37,11 @@ export const authReducer = (state = initialState, action) => {
 				user: null,
 
 			}
+		case ActionTypes.AUTH_REFETCHING_SUCCESS:
+			return {
+				...state,
+				currentUser: action.payload.user
+			}
 		case ActionTypes.AUTH_CLEAR_ERRORS:
 			return {
 				...state,

@@ -92,20 +92,20 @@ const OrderDetailsHeader = (props) => {
                 />
             }
 
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>
+            <div className="d-flex flex-wrap flex-sm-column flex-md-row">
+                <div className="text-center d-flex flex-column align-items-md-center align-items-lg-start flex-grow-1 mb-2 flex-grow-1">
                     <h3>Order #{props.order._id}</h3>
                     <span>
                         <Badge color={getOrderStatusColor(props.order.status)} pill>{statusMappings[props.order.status]}</Badge>
                     </span>
                 </div>
-                <div className="d-flex align-items-center justify-content-center mr-2">
+                <div className="d-flex align-items-center justify-content-center justify-content-lg-end flex-grow-1 mt-2 mt-lg-0" >
                     {
                         props.order.status !== 'FINISHED' &&
                         <div className="mr-3">
                             <Button color={getStatusChangerButtonColor()} outline onClick={() => setChangeStatusModelOpened(true)}>
                                 {getStatusChangerButtonText()}
-                                </Button>
+                            </Button>
                         </div>
                     }
                     <UncontrolledDropdown>
