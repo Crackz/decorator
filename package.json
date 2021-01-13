@@ -11,9 +11,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "compile-sass": "node-sass src/assets/scss/main.scss src/assets/css/main.css",
-    "minify-sass": "node-sass src/assets/scss/main.scss src/assets/css/main.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/main.scss src/assets/css/main.css --source-map true"
+    "compile-sass": "sass src/assets/scss/main.scss src/assets/css/main.css",
+    "minify-sass": "sass src/assets/scss/main.scss src/assets/css/main.min.css --output-style compressed",
+    "map-sass": "sass src/assets/scss/main.scss src/assets/css/main.css --source-map true"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -33,7 +33,7 @@
     "dotenv": "^8.2.0",
     "env-cmd": "^10.0.1",
     "moment": "2.24.0",
-    "node-sass": "4.11.0",
+    "node-sass": "npm:sass@^1.32.4",
     "nouislider": "13.1.1",
     "react": "16.8.4",
     "react-dom": "16.8.4",
@@ -49,7 +49,8 @@
     "react-transition-group": "^4.3.0",
     "reactstrap": "^8.4.0",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sass": "^1.32.4"
   },
   "devDependencies": {
     "@types/react": "16.8.7",
