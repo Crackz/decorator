@@ -31,7 +31,7 @@ const Login = (props) => {
                         <i className="fa fa-phone fa-rotate-90" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input name="phone" placeholder="phone" type="text" innerRef={register({ required: true })} />
+                    <Input name="phone" placeholder="phone" type="text" innerRef={register({ required: true })} defaultValue="01157954393"/>
                     <FormFeedback invalid={(errors.phone && errors.phone.type === 'required') ? "true" : "false"}>
                       يرجي ادخال رقم الهاتف
                   </FormFeedback>
@@ -44,7 +44,7 @@ const Login = (props) => {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input name="password" placeholder="Password" type="password" innerRef={register({ required: true })} />
+                    <Input name="password" placeholder="Password" type="password" innerRef={register({ required: true })} defaultValue="123456"/>
                     <FormFeedback invalid={(errors.password && errors.password.type === 'required') ? "true" : "false"}>
                       يرجي ادخال كلمة السر
                   </FormFeedback>
